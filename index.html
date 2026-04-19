@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>WA3PPJ's Ham House</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pine:       #2d4a35;
+            --pine-dark:  #1e3326;
+            --pine-light: #3d6349;
+            --bark:       #5c4a38;
+            --cream:      #f5f0e8;
+            --cream-dark: #ede6d6;
+            --stone:      #8a9a8e;
+            --text:       #2a2a2a;
+            --text-light: #5a5a5a;
+            --border:     #c8d4c4;
+            --gold:       #9a7c3a;
+            --white:      #ffffff;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Source Serif 4', Georgia, serif;
+            background: var(--cream);
+            color: var(--text);
+        }
+
+        .topbar {
+            background: var(--pine-dark);
+            color: #b8c8bc;
+            text-align: center;
+            padding: 10px 20px;
+            font-size: 0.82em;
+            letter-spacing: 0.06em;
+        }
+
+        .site-header {
+            background: var(--pine);
+            padding: 36px 20px 32px;
+            text-align: center;
+            border-bottom: 4px solid var(--bark);
+        }
+
+        .site-header img.logo {
+            width: min(620px, 90%);
+            margin-bottom: 14px;
+        }
+
+        .site-header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(1.6em, 4vw, 2.6em);
+            font-weight: 700;
+            color: var(--cream);
+            letter-spacing: 0.02em;
+            margin-bottom: 6px;
+        }
+
+        .site-header .tagline {
+            color: #9dbfa6;
+            font-size: 0.98em;
+            font-style: italic;
+            font-weight: 300;
+        }
+
+        .site-wrapper {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 0 20px 60px;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; }
+
+        .section-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.75em;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--pine);
+            border-bottom: 2px solid var(--pine);
+            padding-bottom: 6px;
+            margin: 48px 0 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin-left: 8px;
+        }
+
+        .nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin: 32px 0;
+        }
+
+        .nav-btn {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 22px 16px 18px;
+            cursor: pointer;
+            text-align: center;
+            transition: background 0.18s, border-color 0.18s, box-shadow 0.18s;
+        }
+
+        .nav-btn:hover {
+            background: var(--pine);
+            border-color: var(--pine);
+            box-shadow: 0 4px 14px rgba(45,74,53,0.18);
+        }
+
+        .nav-btn:hover .btn-label,
+        .nav-btn:hover .btn-desc { color: var(--cream); }
+
+        .nav-btn .btn-icon {
+            display: block;
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 12px;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--cream-dark);
+            border: 1px solid var(--border);
+        }
+
+        .nav-btn .btn-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .nav-btn:hover .btn-icon { border-color: rgba(255,255,255,0.3); }
+
+        .nav-btn .btn-label {
+            font-family: 'Playfair Display', serif;
+            font-size: 0.92em;
+            font-weight: 600;
+            color: var(--pine-dark);
+            margin-bottom: 4px;
+            transition: color 0.18s;
+        }
+
+        .nav-btn .btn-desc {
+            font-size: 0.75em;
+            color: var(--text-light);
+            line-height: 1.4;
+            transition: color 0.18s;
+        }
+
+        .home-photo-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+            margin: 24px 0;
+        }
+
+        .home-photo-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+        .photo-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .photo-card img {
+            width: 100%;
+            display: block;
+            object-fit: cover;
+            aspect-ratio: 16/9;
+        }
+
+        .photo-card .photo-caption {
+            padding: 10px 14px;
+            font-size: 0.8em;
+            color: var(--text-light);
+            font-style: italic;
+            border-top: 1px solid var(--border);
+        }
+
+        .photo-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: var(--cream-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--stone);
+            font-size: 2em;
+        }
+
+        .photo-placeholder span {
+            font-size: 0.38em;
+            font-style: italic;
+            letter-spacing: 0.05em;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .home-about {
+            background: var(--pine-dark);
+            color: var(--cream);
+            border-radius: 6px;
+            padding: 32px 36px;
+            margin: 32px 0;
+            line-height: 1.8;
+        }
+
+        .home-about h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--cream);
+            margin-bottom: 14px;
+        }
+
+        .home-about p { color: #c8dace; }
+
+        .band-table-wrap {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .band-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        .band-table thead { background: var(--pine); color: var(--cream); }
+
+        .band-table th {
+            padding: 12px 18px;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: 0.88em;
+            letter-spacing: 0.04em;
+        }
+
+        .band-table td {
+            padding: 11px 18px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text);
+        }
+
+        .band-table tr:last-child td { border-bottom: none; }
+        .band-table tr:hover td { background: #f0f4f0; }
+
+        .cond {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.82em;
+            font-weight: 600;
+        }
+
+        .cond-good   { background: #d4edda; color: #2d6a3f; }
+        .cond-fair   { background: #fff3cd; color: #856404; }
+        .cond-poor   { background: #f8d7da; color: #842029; }
+        .cond-closed { background: #e2e3e5; color: #6c757d; }
+
+        .gif-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 14px;
+            margin: 24px 0;
+        }
+
+        .gif-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .gif-card img { width: 100%; display: block; }
+
+        .gif-card .gif-label {
+            font-size: 0.76em;
+            color: var(--text-light);
+            padding: 7px 10px;
+            font-style: italic;
+        }
+
+        .log-snippet {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+            margin: 24px 0;
+        }
+
+        .log-snippet table { width: 100%; border-collapse: collapse; font-size: 0.87em; }
+        .log-snippet thead { background: var(--cream-dark); }
+
+        .log-snippet th {
+            padding: 10px 16px;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 0.83em;
+            color: var(--pine-dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .log-snippet td { padding: 9px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+        .log-snippet tr:last-child td { border-bottom: none; }
+        .log-snippet tr:hover td { background: #f5f8f5; }
+
+        /* Inner pages */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: 1px solid var(--border);
+            color: var(--pine);
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.88em;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 28px 0 24px;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .back-btn:hover { background: var(--pine); color: var(--cream); border-color: var(--pine); }
+
+        .page-header {
+            border-bottom: 2px solid var(--pine);
+            padding-bottom: 14px;
+            margin-bottom: 28px;
+        }
+
+        .page-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.4em, 3.5vw, 2em);
+            font-weight: 700;
+            color: var(--pine-dark);
+        }
+
+        .page-header .page-sub {
+            color: var(--text-light);
+            font-size: 0.88em;
+            margin-top: 4px;
+            font-style: italic;
+        }
+
+        .panel {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 24px 28px;
+            margin-bottom: 18px;
+        }
+
+        .panel h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--pine-dark);
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel p { color: var(--text); line-height: 1.8; font-size: 0.96em; }
+
+        .panel table { width: 100%; border-collapse: collapse; font-size: 0.88em; margin-top: 8px; }
+
+        .panel th {
+            background: var(--cream-dark);
+            padding: 10px 14px;
+            text-align: left;
+            font-family: 'Playfair Display', serif;
+            color: var(--pine-dark);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .panel td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+        .panel tr:last-child td { border-bottom: none; }
+        .panel tr:hover td { background: #f5f8f5; }
+
+        .img-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
+            margin-top: 14px;
+        }
+
+        .img-card {
+            background: var(--cream-dark);
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .img-card img { width: 100%; display: block; object-fit: cover; aspect-ratio: 4/3; }
+
+        .img-card .img-caption {
+            font-size: 0.76em;
+            color: var(--text-light);
+            padding: 7px 10px;
+            font-style: italic;
+        }
+
+        .img-placeholder {
+            width: 100%;
+            aspect-ratio: 4/3;
+            background: var(--cream-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: var(--border);
+        }
+
+        .live-box {
+            background: var(--pine-dark);
+            border-radius: 6px;
+            padding: 50px 20px;
+            text-align: center;
+            margin-bottom: 18px;
+            color: var(--cream);
+        }
+
+        .live-box .live-icon { font-size: 2.6em; margin-bottom: 12px; display: block; }
+        .live-box .live-label { font-family: 'Playfair Display', serif; font-size: 1.1em; margin-bottom: 8px; color: #9dbfa6; }
+        .live-box p { color: #7a9e84; font-size: 0.9em; line-height: 1.6; }
+
+        .footer {
+            text-align: center;
+            padding: 32px 20px 0;
+            color: var(--stone);
+            font-size: 0.82em;
+            border-top: 1px solid var(--border);
+            margin-top: 50px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .home-photo-row,
+            .home-photo-row.three { grid-template-columns: 1fr; }
+            .nav-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="topbar">WA3PPJ &nbsp;&middot;&nbsp; Amateur Radio Station &nbsp;&middot;&nbsp; Maryland</div>
+
+<header class="site-header">
+    <img class="logo" src="Gifs_Pics/banner.png" alt="WA3PPJ" onerror="this.style.display='none'">
+    <h1>WA3PPJ's Ham House</h1>
+    <div class="tagline">Radio News, Data &amp; Captures</div>
+</header>
+
+<div class="site-wrapper">
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+
+    <div class="section-label">Sections</div>
+    <div class="nav-grid">
+        <div class="nav-btn" onclick="showPage('about')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_about.jpg" alt="About" onerror="this.style.display='none'"></span>
+            <div class="btn-label">About</div>
+            <div class="btn-desc">The station &amp; the operator</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('sdrlogs')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_sdrlogs.jpg" alt="SDR Logs" onerror="this.style.display='none'"></span>
+            <div class="btn-label">SDR Logs</div>
+            <div class="btn-desc">Software-defined radio captures</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('transceivers')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_transceivers.jpg" alt="Transceivers" onerror="this.style.display='none'"></span>
+            <div class="btn-label">Transceivers</div>
+            <div class="btn-desc">Old iron &amp; modern rigs</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('satellite')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_satellite.jpg" alt="Satellite" onerror="this.style.display='none'"></span>
+            <div class="btn-label">Satellite Data</div>
+            <div class="btn-desc">NOAA, SSTV &amp; passes</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('hfdx')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_hfdx.jpg" alt="HF DX" onerror="this.style.display='none'"></span>
+            <div class="btn-label">HF / DX</div>
+            <div class="btn-desc">Longwave &amp; DX chasing</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('gallery')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_gallery.jpg" alt="Gallery" onerror="this.style.display='none'"></span>
+            <div class="btn-label">Gallery</div>
+            <div class="btn-desc">Photos &amp; screenshots</div>
+        </div>
+        <div class="nav-btn" onclick="showPage('live')">
+            <span class="btn-icon"><img src="Gifs_Pics/btn_live.jpg" alt="Live SDR" onerror="this.style.display='none'"></span>
+            <div class="btn-label">Live SDR</div>
+            <div class="btn-desc">Real-time stream &amp; waterfall</div>
+        </div>
+    </div>
+
+    <div class="home-about">
+        <h2>Welcome to the Ham House</h2>
+        <p>This site is a general hub for whatever radio stuff I can get my hands on — SDRs, old transceivers, satellite data, and HF catches. I'll keep building it out over time. Feel free to look around. 73 de WA3PPJ.</p>
+    </div>
+
+    <div class="section-label">Station Photos</div>
+    <div class="home-photo-row">
+        <div class="photo-card">
+            <img src="Gifs_Pics/shack1.jpg" alt="Shack" onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;>&#128247;<span>Add shack photo &mdash; Gifs_Pics/shack1.jpg</span></div>'">
+            <div class="photo-caption">The shack &mdash; main operating position</div>
+        </div>
+        <div class="photo-card">
+            <img src="Gifs_Pics/antenna.jpg" alt="Antenna" onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;>&#128225;<span>Add antenna photo &mdash; Gifs_Pics/antenna.jpg</span></div>'">
+            <div class="photo-caption">Antenna setup</div>
+        </div>
+    </div>
+    <div class="home-photo-row three">
+        <div class="photo-card">
+            <img src="Gifs_Pics/rig.jpg" alt="Rig" onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;>&#127925;<span>Add rig photo &mdash; Gifs_Pics/rig.jpg</span></div>'">
+            <div class="photo-caption">Rig close-up</div>
+        </div>
+        <div class="photo-card">
+            <img src="Gifs_Pics/waterfall.jpg" alt="Waterfall" onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;>&#128202;<span>Add waterfall screenshot &mdash; Gifs_Pics/waterfall.jpg</span></div>'">
+            <div class="photo-caption">SDR waterfall capture</div>
+        </div>
+        <div class="photo-card">
+            <img src="Gifs_Pics/satellite.jpg" alt="Satellite" onerror="this.outerHTML='<div class=&quot;photo-placeholder&quot;>&#128752;<span>Add satellite pass image &mdash; Gifs_Pics/satellite.jpg</span></div>'">
+            <div class="photo-caption">NOAA satellite pass</div>
+        </div>
+    </div>
+
+    <div class="section-label">Featured Gifs &amp; Images</div>
+    <div class="gif-row">
+        <div class="gif-card">
+            <img src="https://cdn.star.nesdis.noaa.gov/GOES19/ABI/SECTOR/ne/GEOCOLOR/GOES19-NE-GEOCOLOR-600x600.gif" alt="GOES-19 Northeast GeoColor">
+            <div class="gif-label">GOES-19 Northeast GeoColor (Live)</div>
+        </div>
+        <div class="gif-card">
+            <img src="Gifs_Pics/featured2.gif" alt="GIF 2" onerror="this.parentElement.innerHTML='<div style=&quot;padding:36px 10px;color:#aaa;font-size:0.78em;font-style:italic&quot;>Add Gifs_Pics/featured2.gif</div>'">
+            <div class="gif-label">Featured image 2</div>
+        </div>
+        <div class="gif-card">
+            <img src="Gifs_Pics/featured3.gif" alt="GIF 3" onerror="this.parentElement.innerHTML='<div style=&quot;padding:36px 10px;color:#aaa;font-size:0.78em;font-style:italic&quot;>Add Gifs_Pics/featured3.gif</div>'">
+            <div class="gif-label">Featured image 3</div>
+        </div>
+        <div class="gif-card">
+            <img src="Gifs_Pics/featured4.gif" alt="GIF 4" onerror="this.parentElement.innerHTML='<div style=&quot;padding:36px 10px;color:#aaa;font-size:0.78em;font-style:italic&quot;>Add Gifs_Pics/featured4.gif</div>'">
+            <div class="gif-label">Featured image 4</div>
+        </div>
+    </div>
+
+    <div class="section-label">HF Propagation &amp; Solar Conditions</div>
+    <div style="text-align:center; margin: 24px 0;">
+        <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
+            <img src="https://www.hamqsl.com/solar101vhfpic.php" alt="Solar-Terrestrial Data" style="max-width:100%;border-radius:6px;border:1px solid var(--border);">
+        </a>
+    </div>
+
+    <div class="section-label">QRZ Logbook</div>
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:6px;overflow:hidden;margin:24px 0;">
+        <iframe align="top" frameborder="0" height="500" scrolling="yes"
+            src="https://logbook.qrz.com/lbstat/WA3PPJ/"
+            style="width:100%;display:block;border:none;">
+        </iframe>
+    </div>
+
+    <div class="footer">WA3PPJ &nbsp;&middot;&nbsp; Amateur Radio &nbsp;&middot;&nbsp; 73</div>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>About</h2>
+        <div class="page-sub">The station and the operator</div>
+    </div>
+    <div class="panel">
+        <h3>Who's Behind the Callsign</h3>
+        <p>This site is a general hub for whatever radio stuff I can get my hands on. I plan to add sections covering SDRs, old transceivers, satellite data, and HF during breaks. I'll keep building over the next few years. As of now it's my online SDR log &mdash; feel free to look around. 07.</p>
+    </div>
+    <div class="panel">
+        <h3>Station Details</h3>
+        <table>
+            <thead><tr><th>Item</th><th>Details</th></tr></thead>
+            <tbody>
+                <tr><td>Callsign</td><td>WA3PPJ</td></tr>
+                <tr><td>Location</td><td>Maryland, USA</td></tr>
+                <tr><td>Primary SDR</td><td>RTL-SDR v3 + upconverters</td></tr>
+                <tr><td>Antennas</td><td>Wire antennas, mag loop, discone</td></tr>
+                <tr><td>Interests</td><td>SDR, satellite, HF, old iron, data modes</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- SDR LOGS -->
+<div id="page-sdrlogs" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>SDR Logs</h2>
+        <div class="page-sub">Software-defined radio captures and notes</div>
+    </div>
+    <div class="panel">
+        <h3>Log Entries</h3>
+        <table>
+            <thead><tr><th>Date</th><th>Frequency</th><th>Mode</th><th>Notes</th></tr></thead>
+            <tbody>
+                <tr><td>2025-04-10</td><td>14.225 MHz</td><td>SSB</td><td>Strong EU DX contact</td></tr>
+                <tr><td>2025-04-09</td><td>137.1 MHz</td><td>APT</td><td>NOAA-19 pass, clean signal</td></tr>
+                <tr><td>2025-04-07</td><td>7.074 MHz</td><td>FT8</td><td>Multiple contacts logged</td></tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="panel">
+        <h3>Screenshots</h3>
+        <div class="img-grid">
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
+        </div>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- TRANSCEIVERS -->
+<div id="page-transceivers" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>Transceivers</h2>
+        <div class="page-sub">Old iron and modern rigs in the shack</div>
+    </div>
+    <div class="panel">
+        <h3>Overview</h3>
+        <p>This section covers the transceivers in the shack &mdash; vintage and modern. Add a panel per rig with description, photos, and restoration notes.</p>
+    </div>
+    <div class="panel">
+        <h3>Rig #1 &mdash; [Name Here]</h3>
+        <p>Describe the rig: year, manufacturer, bands, modifications, restoration history. Add an image below.</p>
+        <div class="img-grid" style="margin-top:14px;">
+            <div class="img-card"><div class="img-placeholder">&#127925;</div><div class="img-caption">Add rig photo</div></div>
+        </div>
+    </div>
+    <div class="panel">
+        <h3>Rig #2 &mdash; [Name Here]</h3>
+        <p>Description for your second transceiver goes here.</p>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- SATELLITE -->
+<div id="page-satellite" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>Satellite Data</h2>
+        <div class="page-sub">NOAA weather satellites, ISS SSTV, and orbital passes</div>
+    </div>
+    <div class="panel">
+        <h3>Overview</h3>
+        <p>Decoded satellite imagery and pass reports. Add your NOAA APT images, SSTV frames, and pass notes below.</p>
+    </div>
+    <div class="panel">
+        <h3>Decoded Images</h3>
+        <div class="img-grid">
+            <div class="img-card"><div class="img-placeholder">&#128752;</div><div class="img-caption">NOAA-19 &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128752;</div><div class="img-caption">NOAA-18 &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128225;</div><div class="img-caption">ISS SSTV &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128752;</div><div class="img-caption">Add pass image</div></div>
+        </div>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- HF / DX -->
+<div id="page-hfdx" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>HF / DX</h2>
+        <div class="page-sub">Longwave catches and DX chasing</div>
+    </div>
+    <div class="panel">
+        <h3>HF Propagation &amp; Solar Conditions</h3>
+        <div style="text-align:center;margin-top:10px;">
+            <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
+                <img src="https://www.hamqsl.com/solar101vhfpic.php" alt="Solar-Terrestrial Data" style="max-width:100%;border-radius:4px;">
+            </a>
+        </div>
+    </div>
+    <div class="panel">
+        <h3>QRZ Logbook</h3>
+        <div style="border-radius:4px;overflow:hidden;margin-top:10px;">
+            <iframe align="top" frameborder="0" height="500" scrolling="yes"
+                src="https://logbook.qrz.com/lbstat/WA3PPJ/"
+                style="width:100%;display:block;border:none;">
+            </iframe>
+        </div>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- GALLERY -->
+<div id="page-gallery" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>Gallery</h2>
+        <div class="page-sub">Station photos, screenshots, and captures</div>
+    </div>
+    <div class="panel">
+        <h3>Station &amp; Equipment</h3>
+        <div class="img-grid">
+            <div class="img-card"><div class="img-placeholder">&#128247;</div><div class="img-caption">Shack photo 1</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128247;</div><div class="img-caption">Shack photo 2</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128225;</div><div class="img-caption">Antenna setup</div></div>
+            <div class="img-card"><div class="img-placeholder">&#127925;</div><div class="img-caption">Rig close-up</div></div>
+        </div>
+    </div>
+    <div class="panel">
+        <h3>SDR Waterfall Screenshots</h3>
+        <div class="img-grid">
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 1</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 2</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 3</div></div>
+        </div>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+<!-- LIVE SDR -->
+<div id="page-live" class="page">
+    <button class="back-btn" onclick="showPage('home')">&#8592; Back to Home</button>
+    <div class="page-header">
+        <h2>Live SDR Broadcast</h2>
+        <div class="page-sub">Real-time stream and waterfall</div>
+    </div>
+    <div class="live-box">
+        <span class="live-icon">&#128246;</span>
+        <div class="live-label">Stream Placeholder</div>
+        <p>Replace this block with your SDR stream embed.<br>Options: OpenWebRX iframe, KiwiSDR embed, or a WebSocket player.</p>
+    </div>
+    <!--
+    UNCOMMENT when stream is ready:
+    <iframe src="http://YOUR_SERVER:8073/" width="100%" height="600"
+        style="border:1px solid #c8d4c4;border-radius:6px;display:block;">
+    </iframe>
+    -->
+    <div class="panel">
+        <h3>How to Connect</h3>
+        <p>Replace the placeholder above with an embed from your SDR server (OpenWebRX or KiwiSDR). You'll need a public IP or reverse proxy to expose a local server. Add connection instructions here once the stream is live.</p>
+    </div>
+    <div class="footer">73 DE WA3PPJ</div>
+</div>
+
+</div>
+
+<script>
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById('page-' + id).classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+</body>
+</html>
