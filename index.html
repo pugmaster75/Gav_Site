@@ -279,6 +279,19 @@
         .cond-closed { background: #e2e3e5; color: #6c757d; }
 
         /* Featured GIFs: fixed 2x2 square */
+.gif-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin: 24px 0;
+}
+
+/* Mobile: stack */
+@media (max-width: 600px) {
+    .gif-row {
+        grid-template-columns: 1fr;
+    }
+}
 
         .gif-card {
             background: var(--white);
