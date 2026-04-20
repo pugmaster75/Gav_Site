@@ -50,6 +50,42 @@
             margin-bottom: 14px;
         }
 
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 32px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .header-gif {
+            width: 120px;
+            height: auto;
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--cream-dark);
+            border: 2px solid rgba(255,255,255,0.2);
+            flex-shrink: 0;
+        }
+
+        .header-gif:last-child {
+            width: auto;
+            min-width: 210px;
+            max-width: 210px;
+        }
+
+        .header-gif img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .header-title {
+            flex: 1;
+        }
+
         .site-header h1 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: clamp(1.6em, 4vw, 2.6em);
@@ -64,6 +100,16 @@
             font-size: 0.98em;
             font-style: italic;
             font-weight: 300;
+        }
+
+        @media (max-width: 900px) {
+            .header-content { gap: 16px; }
+            .header-gif { width: 80px; }
+        }
+
+        @media (max-width: 600px) {
+            .header-content { flex-wrap: wrap; }
+            .header-gif { width: 100px; }
         }
 
         .site-wrapper {
@@ -114,7 +160,7 @@
 
         .nav-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 14px;
             margin: 32px 0;
         }
@@ -140,20 +186,16 @@
 
         .nav-btn .btn-icon {
             display: block;
-            width: 64px;
-            height: 64px;
+            width: 100px;
+            height: 80px;
             margin: 0 auto 12px;
             border-radius: 6px;
             overflow: hidden;
             background: var(--cream-dark);
             border: 1px solid var(--border);
-        }
-
-        .nav-btn .btn-icon img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
         }
 
         .nav-btn:hover .btn-icon { border-color: rgba(255,255,255,0.3); }
@@ -161,7 +203,7 @@
         .nav-btn .btn-label {
             font-family: 'Playfair Display', serif;
             font-size: 0.92em;
-            font-weight: 600;
+            font-weight: 800;
             color: var(--pine-dark);
             margin-bottom: 4px;
             transition: color 0.18s;
@@ -293,60 +335,60 @@
         .cond-closed { background: #e2e3e5; color: #6c757d; }
 
         /* Featured GIFs: fixed 2x2 square */
-.gif-row {
+    .gif-row {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 14px;
     margin: 24px 0;
-}
+    }
 
-/* Mobile: stack */
-@media (max-width: 600px) {
+    /* Mobile: stack */
+    @media (max-width: 600px) {
     .gif-row {
         grid-template-columns: 1fr;
     }
-}
+    }
 
         .gif-card {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            text-align: center;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    text-align: center;
         }
 
-        .gif-card img { width: 100%; display: block; }
+    .gif-card img { width: 100%; display: block; }
 
         .gif-card .gif-label {
-            font-size: 0.76em;
-            color: var(--text-light);
-            padding: 7px 10px;
-            font-style: italic;
+    font-size: 0.76em;
+    color: var(--text-light);
+    padding: 7px 10px;
+    font-style: italic;
         }
 
         .log-snippet {
-            background: var(--white);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            overflow: hidden;
-            margin: 24px 0;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+    margin: 24px 0;
         }
 
-        .log-snippet table { width: 100%; border-collapse: collapse; font-size: 0.87em; }
-        .log-snippet thead { background: var(--cream-dark); }
+    .log-snippet table { width: 100%; border-collapse: collapse; font-size: 0.87em; }
+    .log-snippet thead { background: var(--cream-dark); }
 
-        .log-snippet th {
-            padding: 10px 16px;
-            text-align: left;
-            font-family: 'Playfair Display', serif;
-            font-size: 0.83em;
-            color: var(--pine-dark);
-            border-bottom: 1px solid var(--border);
+    .log-snippet th {
+    padding: 10px 16px;
+    text-align: left;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.83em;
+    color: var(--pine-dark);
+    border-bottom: 1px solid var(--border);
         }
 
-        .log-snippet td { padding: 9px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
-        .log-snippet tr:last-child td { border-bottom: none; }
-        .log-snippet tr:hover td { background: #f5f8f5; }
+    .log-snippet td { padding: 9px 16px; border-bottom: 1px solid var(--border); color: var(--text); }
+    .log-snippet tr:last-child td { border-bottom: none; }
+    .log-snippet tr:hover td { background: #f5f8f5; }
 
         /* Inner pages */
         .back-btn {
@@ -393,15 +435,10 @@
             border-radius: 6px;
             padding: 24px 28px;
             margin-bottom: 18px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
-	.panel {
-    	max-width: 900px;
-    	margin-left: auto;
-    	margin-right: auto;
-    	padding-left: 0;
-    	padding-right: 0;
-	}
 
         .panel h3 {
             font-family: 'Playfair Display', serif;
@@ -487,10 +524,14 @@
             font-style: italic;
         }
 
+        @media (max-width: 900px) {
+            .nav-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        }
+
         @media (max-width: 600px) {
             .home-photo-row,
             .home-photo-row.three { grid-template-columns: 1fr; }
-            .nav-grid { grid-template-columns: 1fr 1fr; }
+            .nav-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -500,8 +541,18 @@
 
 <header class="site-header">
     <img class="logo" src="Gifs_Pics/banner.png" alt="WA3PPJ" onerror="this.style.display='none'">
-    <h1>WA3PPJ's Ham House</h1>
-    <div class="tagline">Radio News, Data &amp; Captures</div>
+    <div class="header-content">
+        <div class="header-gif">
+            <img src="img/CEMS-main.jpg" alt="Left" onerror="this.parentElement.style.display='none'">
+        </div>
+        <div class="header-title">
+            <h1>WA3PPJ's Ham House</h1>
+            <div class="tagline">Radio News, Data &amp; Captures</div>
+        </div>
+        <div class="header-gif">
+            <img src="img/hack my life kevin GIF by truTV.gif" alt="Right" onerror="this.parentElement.style.display='none'">
+        </div>
+    </div>
 </header>
 
 <div class="site-wrapper">
@@ -512,37 +563,32 @@
     <div class="section-label">Sections</div>
     <div class="nav-grid">
         <div class="nav-btn" onclick="showPage('about')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_about.jpg" alt="About" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Simpson\ Who\ Is\ That\ GIF.gif');"></span>
             <div class="btn-label">About</div>
             <div class="btn-desc">The station &amp; the operator</div>
         </div>
         <div class="nav-btn" onclick="showPage('sdrlogs')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_sdrlogs.jpg" alt="SDR Logs" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Computer\ Working\ GIF.gif');"></span>
             <div class="btn-label">SDR Logs</div>
             <div class="btn-desc">Software-defined radio captures</div>
         </div>
         <div class="nav-btn" onclick="showPage('transceivers')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_transceivers.jpg" alt="Transceivers" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Make\ It\ Rain\ Money\ GIF.gif');"></span>
             <div class="btn-label">Transceivers</div>
             <div class="btn-desc">Old iron &amp; modern rigs</div>
         </div>
-        <div class="nav-btn" onclick="showPage('satellite')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_satellite.jpg" alt="Satellite" onerror="this.style.display='none'"></span>
-            <div class="btn-label">Satellite Data</div>
-            <div class="btn-desc">NOAA, SSTV &amp; passes</div>
-        </div>
         <div class="nav-btn" onclick="showPage('hfdx')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_hfdx.jpg" alt="HF DX" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Can\ You\ Hear\ Me\ Neon\ Rated\ GIF\ by\ NEON.gif');"></span>
             <div class="btn-label">HF / DX</div>
             <div class="btn-desc">Longwave &amp; DX chasing</div>
         </div>
         <div class="nav-btn" onclick="showPage('gallery')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_gallery.jpg" alt="Gallery" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Photography\ Zoom\ GIF\ by\ Respective.gif');"></span>
             <div class="btn-label">Gallery</div>
             <div class="btn-desc">Photos &amp; screenshots</div>
         </div>
         <div class="nav-btn" onclick="showPage('live')">
-            <span class="btn-icon"><img src="Gifs_Pics/btn_live.jpg" alt="Live SDR" onerror="this.style.display='none'"></span>
+            <span class="btn-icon" style="background-image: url('img/Listen\ Angry\ Birds\ GIF.gif');"></span>
             <div class="btn-label">Live SDR</div>
             <div class="btn-desc">Real-time stream &amp; waterfall</div>
         </div>
@@ -627,8 +673,6 @@
   </div>
 
 </div>
-        </div>
-    </div>
 
     <div class="section-label">HF Propagation & Solar Conditions</div>
 
@@ -708,6 +752,7 @@
             <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
             <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
             <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
+            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall &mdash; add image</div></div>
         </div>
     </div>
     <div class="footer">73 DE WA3PPJ</div>
@@ -767,23 +812,6 @@
     <div class="page-header">
         <h2>HF / DX</h2>
         <div class="page-sub">Longwave catches and DX chasing</div>
-    </div>
-    <div class="panel">
-        <h3>HF Propagation &amp; Solar Conditions</h3>
-        <div style="text-align:center;margin-top:10px;">
-            <a href="https://www.hamqsl.com/solar.html" title="Click to add Solar-Terrestrial Data to your website!">
-                <img src="https://www.hamqsl.com/solar101vhfpic.php" alt="Solar-Terrestrial Data" style="max-width:100%;border-radius:4px;">
-            </a>
-        </div>
-    </div>
-    <div class="panel">
-        <h3>QRZ Logbook</h3>
-        <div style="border-radius:4px;overflow:hidden;margin-top:10px;">
-            <iframe align="top" frameborder="0" height="500" scrolling="yes"
-                src="https://logbook.qrz.com/lbstat/WA3PPJ/"
-                style="width:100%;display:block;border:none;">
-            </iframe>
-        </div>
     </div>
     <div class="footer">73 DE WA3PPJ</div>
 </div>
