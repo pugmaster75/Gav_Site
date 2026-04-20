@@ -64,7 +64,7 @@
 
         .header-gif {
             position: absolute;
-            width: clamp(80px, 12vw, 160px);
+            width: clamp(140px, 20vw, 280px);
             height: auto;
             border-radius: 6px;
             overflow: hidden;
@@ -78,9 +78,6 @@
 
         .header-gif:last-child {
             right: 0;
-            width: auto;
-            min-width: clamp(80px, 12vw, 160px);
-            max-width: clamp(140px, 20vw, 280px);
         }
 
 
@@ -492,6 +489,16 @@
             overflow: hidden;
         }
 
+        .img-card {
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .img-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 14px rgba(45,74,53,0.15);
+        }
+
         .img-card img { width: 100%; display: block; object-fit: cover; aspect-ratio: 4/3; }
 
         .img-card .img-caption {
@@ -499,6 +506,131 @@
             color: var(--text-light);
             padding: 7px 10px;
             font-style: italic;
+        }
+
+        /* Modal Lightbox */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 24px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow: auto;
+            margin: auto;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 1.8em;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: var(--text);
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+
+        .modal-close:hover {
+            background: var(--border);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            margin-top: 24px;
+            flex-shrink: 1;
+        }
+
+        .modal-caption {
+            font-size: 0.95em;
+            color: var(--text);
+            margin: 12px 0;
+            flex-shrink: 0;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 12px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--pine);
+            background: var(--pine);
+            color: var(--cream);
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Source Serif 4', serif;
+            font-size: 0.95em;
+            font-weight: 600;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .modal-btn:hover {
+            background: var(--pine-dark);
+            border-color: var(--pine-dark);
+        }
+
+        .modal-btn.secondary {
+            background: var(--white);
+            color: var(--pine);
+            border-color: var(--pine);
+        }
+
+        .modal-btn.secondary:hover {
+            background: var(--cream-dark);
+        }
+
+        .modal-description {
+            background: var(--cream-dark);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px 14px;
+            font-size: 0.9em;
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 80px;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 12px 0;
+            flex-shrink: 0;
         }
 
         .img-placeholder {
@@ -554,7 +686,7 @@
     <img class="logo" src="Gifs_Pics/banner.png" alt="WA3PPJ" onerror="this.style.display='none'">
     <div class="header-content">
         <div class="header-gif">
-            <img src="img/CEMS-main.jpg" alt="Left" onerror="this.parentElement.style.display='none'">
+            <img src="img/CEMS-main rectangle.png" alt="Left" onerror="this.parentElement.style.display='none'">
         </div>
         <div class="header-title">
             <h1>WA3PPJ's Ham House</h1>
@@ -844,11 +976,20 @@
         </div>
     </div>
     <div class="panel">
-        <h3>SDR Waterfall Screenshots</h3>
+        <h3>SDR Satellite Captures</h3>
         <div class="img-grid">
-            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 1</div></div>
-            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 2</div></div>
-            <div class="img-card"><div class="img-placeholder">&#128202;</div><div class="img-caption">Waterfall 3</div></div>
+            <div class="img-card">
+                <img src="img/msu_mr_rgb_03_30_2026.png" alt="GOES-19 Satellite Waterfall" data-description="This was my first Meteor M2 capture. I was at my grandparents' house, and I could not contain my excitement when I finally got it to work. I of course, forgot to write down which Meteor M2 it actually came from">
+                <div class="img-caption">Meteor M2-? first capture, 03_30_2026 AM</div>
+            </div>
+            <div class="img-card">
+                <img src="img/msu_mr_rgb_03_30_2026 (later that day).png" alt="GOES-19 Satellite Waterfall" data-description="This was my second Meteor M2 capture, later that same day as my first. I did write down that this one was from Meteor M2-4. I found it intresting that the water next to house seamed to act like a huge reflector for the signal.">
+                <div class="img-caption">Meteor M2-4, 03_30_2026 PM</div>
+            </div>
+            <div class="img-card">
+                <img src="img/msu_mr_rgb_04_1_2026.png" alt="GOES-19 Satellite Waterfall" data-description="This was my third Meteor M2 capture. I recived the signal at my base station">
+                <div class="img-caption">Meteor M2-4, 04_1_2026 PM</div>
+            </div>
         </div>
     </div>
     <div class="footer">73 DE WA3PPJ</div>
@@ -881,12 +1022,123 @@
 
 </div>
 
+<div id="imageModal" class="modal">
+    <div class="modal-content">
+        <button class="modal-close" onclick="closeImageModal()">&times;</button>
+        <img id="modalImage" class="modal-image" src="" alt="">
+        <div class="modal-caption" id="modalCaption"></div>
+        <div class="modal-description" id="modalDescription"></div>
+        <div class="modal-buttons">
+            <button class="modal-btn secondary" onclick="closeImageModal()">Close</button>
+            <button class="modal-btn" id="downloadBtn" onclick="downloadImage()">📥 Download</button>
+        </div>
+    </div>
+</div>
+
 <script>
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
         document.getElementById('page-' + id).classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+
+    // Image modal functionality
+    let currentImageData = {};
+
+    function openImageModal(imgElement) {
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const caption = document.getElementById('modalCaption');
+        const description = document.getElementById('modalDescription');
+        
+        // Get image source and extract filename
+        const src = imgElement.src;
+        const filename = src.split('/').pop(); // Get filename from path
+        const altText = imgElement.alt || 'Image';
+        
+        // Get caption from parent card if available
+        const card = imgElement.closest('.img-card');
+        const captionText = card ? card.querySelector('.img-caption')?.textContent || altText : altText;
+        
+        // Get description if available (from data attribute)
+        const descriptionText = imgElement.getAttribute('data-description') || '';
+        
+        // Get Google Drive link if available (from data attribute)
+        const driveLink = imgElement.getAttribute('data-drive-link');
+        
+        // Store current image data
+        currentImageData = {
+            src: src,
+            filename: filename,
+            caption: captionText,
+            description: descriptionText,
+            driveLink: driveLink
+        };
+        
+        modalImg.src = src;
+        caption.textContent = captionText;
+        
+        // Show description if available
+        if (descriptionText) {
+            description.textContent = descriptionText;
+            description.style.display = 'block';
+        } else {
+            description.style.display = 'none';
+        }
+        
+        // Update download button
+        const downloadBtn = document.getElementById('downloadBtn');
+        if (driveLink) {
+            downloadBtn.textContent = '📥 Open in Google Drive';
+            downloadBtn.onclick = () => window.open(driveLink, '_blank');
+        } else {
+            downloadBtn.textContent = '📥 Download';
+            downloadBtn.onclick = downloadImage;
+        }
+        
+        modal.classList.add('active');
+    }
+
+    function closeImageModal() {
+        const modal = document.getElementById('imageModal');
+        modal.classList.remove('active');
+    }
+
+    function downloadImage() {
+        if (!currentImageData.src) return;
+        
+        // Create a temporary link and click it
+        // Use only the filename, not the description
+        const link = document.createElement('a');
+        link.href = currentImageData.src;
+        link.download = currentImageData.filename || 'image';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+
+    // Close modal when clicking outside the content
+    document.getElementById('imageModal').addEventListener('click', function(event) {
+        if (event.target === this) {
+            closeImageModal();
+        }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            closeImageModal();
+        }
+    });
+
+    // Add click handlers to all image cards
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.img-card img').forEach(img => {
+            img.addEventListener('click', function() {
+                openImageModal(this);
+            });
+        });
+    });
 </script>
 
 </body>
